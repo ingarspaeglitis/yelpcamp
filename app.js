@@ -12,6 +12,8 @@ const express = require("express"),
     seedDB    = require("./seeds");
 
 
+require('dotenv').config();
+
 const commentRoutes = require("./routes/comments");   
 const campgroundRoutes = require("./routes/campgrounds");  
 const indexRoutes = require("./routes/index");

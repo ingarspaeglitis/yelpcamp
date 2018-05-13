@@ -12,11 +12,11 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next) {
 
             if (err || !foundCampground){
 
-                req.flash("error", "Campground not found or other error");
-                res.redirect("back");
+                req.flash("error", "Sorry, that campground does not exist!");
+                res.redirect("/campgrounds");
             }
             else {
-                if (foundCampground.author.id.equals(req.user._id)) {
+                if (foundCampground.author.id.equals(req.user._id) || req.user.isAdmin) {
 
                    next();                    
                 }
@@ -48,7 +48,7 @@ middlewareObj.checkCommentsOwnership = function(req, res, next) {
             }
             else {
                 
-                if (foundComment.author.id.equals(req.user._id)) {
+                if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
 
                    next();                    
                 }
@@ -73,7 +73,7 @@ middlewareObj.isLoggedIn = function(req, res, next) {
         return next(); 
     }
 
-    req.flash("error", "You need to be logged in to do that");
+    req.flash("error", "You must be signed in to do that!");
     res.redirect("/login");
 }
 
